@@ -10,4 +10,9 @@
     <string name="email">E-mail</string>
     <string name="senha">Senha</string>
     <string name="cadastrar">Cadastrar</string>
+    <string name="informe_campos">Informe todos os campos</string>
+    <string name="tente_novamente">Algo de errado aconteceu. Tente novamente</string>
+    <string name="email_existente">E-mail existente</string>
+    <string name="entrar">Entrar</string>
+    <string name="usuario_senha_incorreto">Usuário ou senha incorretos</string>
 </resources>

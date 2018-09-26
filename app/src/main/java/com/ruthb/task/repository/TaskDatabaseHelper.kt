@@ -17,9 +17,9 @@ class TaskDatabaseHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_N
         ${DatabaseConstants.USER.COLUMNS.ID} INTEGER PRIMARY KEY AUTOINCREMENT,
         ${DatabaseConstants.USER.COLUMNS.NAME} TEXT,
         ${DatabaseConstants.USER.COLUMNS.EMAIL} TEXT,
-        ${DatabaseConstants.USER.COLUMNS.PASSWORD} TEXT,
+        ${DatabaseConstants.USER.COLUMNS.PASSWORD} TEXT
 
-    );""".trimIndent()
+    );"""
 
     private val deleteTableUser = "drop table if exists ${DatabaseConstants.USER.TABLE_NAME}"
 

@@ -1,10 +1,10 @@
 package com.ruthb.task.constants
 
 class DatabaseConstants {
-    object USER{
+    object USER {
         val TABLE_NAME = "user"
 
-        object COLUMNS{
+        object COLUMNS {
             val ID = "id"
             val NAME = "name"
             val EMAIL = "email"

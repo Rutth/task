@@ -4,17 +4,18 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.ruthb.task.R
+import com.ruthb.task.entities.OnTaskListFragmentInteractionListener
 import com.ruthb.task.entities.TaskEntity
 import com.ruthb.task.viewholder.TaskViewHolder
 
-class TasklistAdapter(val taskList: List<TaskEntity>) : RecyclerView.Adapter<TaskViewHolder>() {
+class TasklistAdapter(val taskList: List<TaskEntity>, val listener: OnTaskListFragmentInteractionListener) : RecyclerView.Adapter<TaskViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val context = parent?.context
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.row_task_list, parent, false)
 
-        return TaskViewHolder(view)
+        return TaskViewHolder(view, listener)
     }
 
     override fun getItemCount(): Int {

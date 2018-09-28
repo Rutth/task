@@ -5,10 +5,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.ruthb.task.R
+import com.ruthb.task.entities.OnTaskListFragmentInteractionListener
 import com.ruthb.task.entities.TaskEntity
 import com.ruthb.task.repository.PriorityCacheConstants
 
-class TaskViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class TaskViewHolder(itemView: View, val listener: OnTaskListFragmentInteractionListener): RecyclerView.ViewHolder(itemView) {
     private val mTextDescription: TextView = itemView.findViewById(R.id.tvDescription)
     private val mTextPriority: TextView = itemView.findViewById(R.id.tvPriority)
     private val mTextDate: TextView = itemView.findViewById(R.id.tvDueDate)
@@ -21,6 +22,10 @@ class TaskViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         if(task.complete){
             mImgTask.setImageResource(R.drawable.ic_done)
+        }
+
+        mTextDescription.setOnClickListener {
+            listener.onListClick(task.id)
         }
     }
 }

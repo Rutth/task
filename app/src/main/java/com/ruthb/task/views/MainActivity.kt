@@ -75,10 +75,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (item.itemId) {
             R.id.nav_done -> {
-                fragment = TaskListFragment.newInstance()
+                fragment = TaskListFragment.newInstance(TaskConstants.TASKFILTER.COMPLETE)
             }
             R.id.nav_todo -> {
-                fragment = TaskListFragment.newInstance()
+                fragment = TaskListFragment.newInstance(TaskConstants.TASKFILTER.TODO)
             }
             R.id.nav_logout -> {
                 handleLogout()
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         finish()
     }
     private fun startDefaultFragment(){
-        var fragment: Fragment = TaskListFragment.newInstance()
+        var fragment: Fragment = TaskListFragment.newInstance(TaskConstants.TASKFILTER.COMPLETE)
 
         supportFragmentManager.beginTransaction().replace(R.id.frameContent, fragment).commit()
     }

@@ -16,6 +16,7 @@ import com.ruthb.task.R
 import com.ruthb.task.adapter.TasklistAdapter
 import com.ruthb.task.business.TaskBusiness
 import com.ruthb.task.constants.TaskConstants
+import com.ruthb.task.entities.OnTaskListFragmentInteractionListener
 import com.ruthb.task.util.SecurityPreferences
 
 class TaskListFragment : Fragment(), View.OnClickListener {
@@ -23,15 +24,27 @@ class TaskListFragment : Fragment(), View.OnClickListener {
     private lateinit var mRecyclerTaskList: RecyclerView
     private lateinit var mTaskBusiness: TaskBusiness
     private lateinit var mSecurityPreferences: SecurityPreferences
+    private lateinit var mListener: OnTaskListFragmentInteractionListener
+
+    private var mTaskFilter: Int = 0
 
     companion object {
-        fun newInstance(): TaskListFragment {
-            return TaskListFragment()
+        fun newInstance(taskFilter: Int): TaskListFragment {
+            val args: Bundle = Bundle()
+            args.putInt(TaskConstants.TASKFILTER.KEY, taskFilter)
+
+            val fragment = TaskListFragment()
+            fragment.arguments = args
+
+            return fragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(arguments != null){
+            mTaskFilter = arguments!!.getInt(TaskConstants.TASKFILTER.KEY)
+        }
 
     }
 
@@ -49,13 +62,22 @@ class TaskListFragment : Fragment(), View.OnClickListener {
         mContext = rootView.context
         mTaskBusiness = TaskBusiness(mContext)
         mSecurityPreferences = SecurityPreferences(mContext)
+        mListener = object: OnTaskListFragmentInteractionListener{
+            override fun onListClick(taskId: Int) {
+
+                val bundle: Bundle = Bundle()
+                bundle.putInt(TaskConstants.BUNDLE.TASKID, taskId)
+                startActivity(Intent(mContext, TaskFormActivity::class.java).putExtras(bundle))
+            }
+
+        }
 
         mRecyclerTaskList = rootView.findViewById<RecyclerView>(R.id.recyclerTasklist)
 
-        
+
         mRecyclerTaskList.apply {
             layoutManager = LinearLayoutManager(mContext)
-            adapter = TasklistAdapter(mutableListOf())
+            adapter = TasklistAdapter(mutableListOf(), mListener)
         }
 
 
@@ -63,10 +85,7 @@ class TaskListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loadTask(){
-        val userId = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_ID).toInt()
-        val taskList = mTaskBusiness.getList(userId)
-        mRecyclerTaskList.adapter = TasklistAdapter(taskList)
-
+        mRecyclerTaskList.adapter = TasklistAdapter(mTaskBusiness.getList(mTaskFilter), mListener)
     }
 
     override fun onClick(v: View) {

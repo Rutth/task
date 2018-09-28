@@ -28,6 +28,7 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener, DatePickerDi
     private var mListPriorityEntity: MutableList<PriorityEntity> = mutableListOf()
     private var mListPriorityId: MutableList<Int> = mutableListOf()
 
+    private var mTaskId: Int = 0
 
     private val mSimpleDateFormat: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -41,7 +42,10 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener, DatePickerDi
 
         loadPriorities()
         setListeners()
+        loadDataFromActivity()
     }
+
+
 
     private fun setListeners() {
         btnDate.setOnClickListener(this)
@@ -88,8 +92,16 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener, DatePickerDi
             val dueDate = btnDate.text.toString()
             val userId = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_ID)
 
-            val task = TaskEntity(0, userId.toInt(), priorityId, description, dueDate, complete)
-            mTaskBusiness.insert(task)
+            val task = TaskEntity(mTaskId, userId.toInt(), priorityId, description, dueDate, complete)
+
+            if(mTaskId == 0){
+                mTaskBusiness.insert(task)
+                Toast.makeText(this, getString(R.string.tarefa_cadastrada), Toast.LENGTH_LONG).show()
+            } else {
+                mTaskBusiness.update(task)
+                Toast.makeText(this, getString(R.string.tarefa_alterada), Toast.LENGTH_LONG).show()
+            }
+
 
             finish()
 
@@ -100,6 +112,17 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener, DatePickerDi
 
     }
 
+    private fun getIndex(id: Int): Int{
+
+        var index = 0
+        for(i in 0..mListPriorityEntity.size){
+            if(mListPriorityEntity[i].id == id){
+                index = i
+                break
+            }
+        }
+        return index
+    }
 
     private fun loadPriorities() {
         mListPriorityEntity = mPriorityBusiness.getList()
@@ -109,5 +132,21 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener, DatePickerDi
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listPriori)
 
         spinnerPriority.adapter = adapter
+    }
+
+    private fun loadDataFromActivity() {
+        val bundle = intent.extras
+        if(bundle != null){
+            mTaskId = bundle.getInt(TaskConstants.BUNDLE.TASKID)
+
+            val task = mTaskBusiness.get(mTaskId)
+            if(task != null){
+                edtDescription.setText(task.description)
+                btnDate.text = task.dueDate
+                checkComplete.isChecked = task.complete
+                spinnerPriority.setSelection(getIndex(task.priorityId))
+            }
+
+        }
     }
 }

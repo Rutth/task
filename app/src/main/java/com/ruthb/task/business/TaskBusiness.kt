@@ -34,4 +34,20 @@ class TaskBusiness(context: Context) {
         }
     }
 
+    fun delete(taskId: Int) {
+        try {
+            mTaskRepository.delete(taskId)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    fun complete(taskId: Int, complete: Boolean){
+        val task = mTaskRepository.get(taskId)
+        if(task != null){
+            task.complete = complete
+            mTaskRepository.update(task)
+        }
+    }
+
 }

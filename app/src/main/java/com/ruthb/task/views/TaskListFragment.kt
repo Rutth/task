@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.ruthb.task.R
 import com.ruthb.task.adapter.TasklistAdapter
@@ -63,11 +64,28 @@ class TaskListFragment : Fragment(), View.OnClickListener {
         mTaskBusiness = TaskBusiness(mContext)
         mSecurityPreferences = SecurityPreferences(mContext)
         mListener = object: OnTaskListFragmentInteractionListener{
+
             override fun onListClick(taskId: Int) {
 
                 val bundle: Bundle = Bundle()
                 bundle.putInt(TaskConstants.BUNDLE.TASKID, taskId)
                 startActivity(Intent(mContext, TaskFormActivity::class.java).putExtras(bundle))
+            }
+
+            override fun onDeleteClick(taskId: Int) {
+                mTaskBusiness.delete(taskId)
+                loadTask()
+                Toast.makeText(mContext, getString(R.string.tarefa_removida), Toast.LENGTH_LONG).show()
+            }
+
+            override fun onCompleteClick(taskId: Int) {
+                mTaskBusiness.complete(taskId, true)
+                loadTask()
+            }
+
+            override fun onUncompleteClick(taskId: Int) {
+                mTaskBusiness.complete(taskId, false)
+                loadTask()
             }
 
         }

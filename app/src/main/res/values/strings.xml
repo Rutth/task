@@ -22,4 +22,7 @@
     <string name="tarefa_alterada">Tarefa alterada com sucesso!</string>
     <string name="tarefa_cadastrada">Tarefa cadastrada com sucesso!</string>
     <string name="tarefa_removida">Tarefa removida com sucesso!</string>
+    <string name="salvar">Salvar</string>
+    <string name="cadastre">Cadastre-se</string>
+    <string name="nao_tem_conta">Não tem uma conta?</string>
 </resources>

@@ -2,7 +2,6 @@ package com.ruthb.task.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -16,6 +15,9 @@ import com.ruthb.task.repository.PriorityCacheConstants
 import com.ruthb.task.util.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
 
         val toggle = ActionBarDrawerToggle(
@@ -40,7 +43,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         loadPriorityCache()
 
         startDefaultFragment()
+
+        formatUserName()
+        formatDate()
     }
+
+
 
     private fun loadPriorityCache() {
         PriorityCacheConstants.setCache(mPriorityBusiness.getList())
@@ -105,6 +113,47 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
+
+    private fun formatUserName() {
+        val name = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_NAME)
+        val email =  mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_EMAIL)
+
+        val str = "Olá, ${name}!"
+        tvHello.text = str
+
+        val navigationView = findViewById(R.id.nav_view) as NavigationView
+        val header = navigationView.getHeaderView(0)
+        header.tvName.text = name
+        header.tvEmail.text = email
+
+    }
+    private fun formatDate() {
+        val str = "dia semana, dia de month"
+        val calendar = Calendar.getInstance()
+        println("calendar: $calendar")
+
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = formatName("MMMM", Calendar.MONTH, calendar.get(Calendar.MONTH)).capitalize()
+        val year = calendar.get(Calendar.YEAR)
+        val dayOfWeek = formatName("EEEE", Calendar.DAY_OF_WEEK, calendar.get(Calendar.DAY_OF_WEEK)).capitalize()
+        println("semana $dayOfWeek")
+
+        tvDate.text = "${dayOfWeek}, ${dayOfMonth} de ${month} de ${year}"
+
+    }
+
+    private fun formatName(format: String, type: Int, n: Int): String{
+        val simpleDateMonth = SimpleDateFormat(format, Locale("pt", "BR"))
+        val c = GregorianCalendar()
+        c.set(type, n)
+
+        val month = simpleDateMonth.format(c.time)
+
+        return month
+    }
+
+
+
     private fun startDefaultFragment(){
         var fragment: Fragment = TaskListFragment.newInstance(TaskConstants.TASKFILTER.COMPLETE)
 

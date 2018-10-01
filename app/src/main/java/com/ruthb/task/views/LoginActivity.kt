@@ -30,6 +30,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setListeners() {
         btnLogin.setOnClickListener(this)
+        tvRegister.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -37,14 +38,17 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnLogin -> {
                 handleLogin()
             }
+            R.id.tvRegister -> {
+                startActivity(Intent(this, RegisterActivity::class.java))
+            }
         }
     }
 
-    private fun handleLogin(){
+    private fun handleLogin() {
         val email = edtEmail.text.toString()
         val password = edtPassword.text.toString()
 
-        if(mUserBusiness.login(email, password)){
+        if (mUserBusiness.login(email, password)) {
 
             startActivity(Intent(this, MainActivity::class.java))
             finish()
@@ -54,11 +58,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun verifyLoggedUser(){
+    private fun verifyLoggedUser() {
         val userId = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_ID)
         val name = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_NAME)
 
-        if(userId != "" && name != ""){
+        if (userId != "" && name != "") {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

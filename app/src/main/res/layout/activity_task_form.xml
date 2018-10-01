@@ -4,51 +4,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/activity_vertical_margin"
     tools:context=".views.TaskFormActivity">
 
     <EditText
         android:id="@+id/edtDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="@string/descricao"
+        style="@style/mGrayEdt"
+        android:lines="2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinnerPriority"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPrioridade" />
 
-    <CheckBox
-        android:id="@+id/checkComplete"
+    <View
+        android:id="@+id/divider"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Completa"
+        android:layout_height="1dp"
+        android:layout_marginTop="28dp"
+        android:background="#ececec"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinnerPriority" />
 
-    <Button
-        android:id="@+id/btnDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clique para selecionar a data"
+    <CheckBox
+        android:id="@+id/checkComplete"
+        style="@style/mGrayTv"
+        android:layout_width="0dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="24dp"
+        android:button="@drawable/check_selector"
+        android:paddingLeft="10dp"
+        android:text="Completa"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="28dp"
+        android:background="#ececec"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/checkComplete" />
 
     <Button
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnDate"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/salvar"
+        android:layout_marginTop="24dp"
+        style="@style/mBtnDate"
+        android:gravity="center_vertical"
+        android:text="Clique para selecionar a data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="28dp"
+        android:background="#ececec"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnDate" />
+
+    <Button
+        android:id="@+id/btnSave"
+        style="@style/mDefaultBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/salvar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPrioridade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Prioridade"
+        android:paddingLeft="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtDescription" />
 
 
 </android.support.constraint.ConstraintLayout>

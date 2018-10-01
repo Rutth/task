@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_vertical_margin"
     tools:context=".views.TaskFormActivity">
-
+    
     <EditText
         android:id="@+id/edtDescription"
         android:layout_width="0dp"

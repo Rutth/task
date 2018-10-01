@@ -24,9 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.TaskFormActivity">
+        <activity android:name=".views.TaskFormActivity"
+            android:screenOrientation="portrait"/>
 
-        </activity>
     </application>
 
 </manifest>
